@@ -107,3 +107,21 @@ mqttStatus {
     font-size: 24px;
 }
 
+.infobox {
+    margin-left: 11px;
+    margin-top: 2px;
+    text-align: left;
+    color: white;
+    padding: 17px 30px;
+    background-color: #43a047;
+}
+
+.infobox > i {
+    font-size: 25px;
+}
+
+.infobox > span {
+    position: relative;
+    top: -3px;
+    margin-left: 10px;
+}

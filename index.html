@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Remote Telemetry System - Poliba Corse</title>
     <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
     <link rel="stylesheet" href="main.css">
 </head>
 <body>
@@ -17,98 +18,104 @@
     </mqttStatus>
 
     <div class="row">
+        <div class="col s7">
+            <div class="row">
 
-        <div class="col s12 m4">
-            <div class="card-panel">
-
-                <div class="row">
-                    <div class="col s6">
-                        <div>Temp. acqua</div>
-                        <canvas id="th2o-chart"
-                                data-type="linear-gauge"
-                                data-width="120"
-                                data-height="400"
-                                data-min-value="0"
-                                data-start-angle="90"
-                                data-ticks-angle="180"
-                                data-value-box="false"
-                                data-max-value="220"
-                                data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
-                                data-minor-ticks="2"
-                                data-stroke-ticks="true"
-                                data-highlights='[ {"from": 100, "to": 220, "color": "rgba(200, 50, 50, .75)"} ]'
-                                data-color-plate="#fff"
-                                data-border-shadow-width="0"
-                                data-borders="false"
-                                data-needle-type="arrow"
-                                data-needle-width="2"
-                                data-needle-circle-size="7"
-                                data-needle-circle-outer="true"
-                                data-needle-circle-inner="false"
-                                data-animation-duration="100"
-                                data-animation-rule="linear"
-                                data-bar-width="10"
-                                data-value="0"
-                        ></canvas>
-                        <div class="th2o-value"><span>0</span> °C</div>
+                <div class="col s6">
+                    <div class="card-panel">
+                        <div class="row">
+                            <div class="col s6">
+                                <div>Temp. acqua</div>
+                                <canvas id="th2o-chart"
+                                        data-type="linear-gauge"
+                                        data-width="120"
+                                        data-height="400"
+                                        data-min-value="0"
+                                        data-start-angle="90"
+                                        data-ticks-angle="180"
+                                        data-value-box="false"
+                                        data-max-value="220"
+                                        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+                                        data-minor-ticks="2"
+                                        data-stroke-ticks="true"
+                                        data-highlights='[ {"from": 100, "to": 220, "color": "rgba(200, 50, 50, .75)"} ]'
+                                        data-color-plate="#fff"
+                                        data-border-shadow-width="0"
+                                        data-borders="false"
+                                        data-needle-type="arrow"
+                                        data-needle-width="2"
+                                        data-needle-circle-size="7"
+                                        data-needle-circle-outer="true"
+                                        data-needle-circle-inner="false"
+                                        data-animation-duration="100"
+                                        data-animation-rule="linear"
+                                        data-bar-width="10"
+                                        data-value="0"
+                                ></canvas>
+                                <div class="th2o-value"><span>0</span> °C</div>
+                            </div>
+                            <div class="col s6">
+                                <div>Temp. olio</div>
+                                <canvas id="toil-chart"
+                                        data-type="linear-gauge"
+                                        data-width="120"
+                                        data-height="400"
+                                        data-min-value="0"
+                                        data-start-angle="90"
+                                        data-ticks-angle="180"
+                                        data-value-box="false"
+                                        data-max-value="220"
+                                        data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
+                                        data-minor-ticks="2"
+                                        data-stroke-ticks="true"
+                                        data-highlights='[ {"from": 100, "to": 220, "color": "rgba(200, 50, 50, .75)"} ]'
+                                        data-color-plate="#fff"
+                                        data-border-shadow-width="0"
+                                        data-borders="false"
+                                        data-needle-type="arrow"
+                                        data-needle-width="2"
+                                        data-needle-circle-size="7"
+                                        data-needle-circle-outer="true"
+                                        data-needle-circle-inner="false"
+                                        data-animation-duration="100"
+                                        data-animation-rule="linear"
+                                        data-bar-width="10"
+                                        data-value="0"
+                                ></canvas>
+                                <div class="toil-value"><span>0</span> °C</div>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="col s6">
-                        <div>Temp. olio</div>
-                        <canvas id="toil-chart"
-                                data-type="linear-gauge"
-                                data-width="120"
-                                data-height="400"
-                                data-min-value="0"
-                                data-start-angle="90"
-                                data-ticks-angle="180"
-                                data-value-box="false"
-                                data-max-value="220"
-                                data-major-ticks="0,20,40,60,80,100,120,140,160,180,200,220"
-                                data-minor-ticks="2"
-                                data-stroke-ticks="true"
-                                data-highlights='[ {"from": 100, "to": 220, "color": "rgba(200, 50, 50, .75)"} ]'
-                                data-color-plate="#fff"
-                                data-border-shadow-width="0"
-                                data-borders="false"
-                                data-needle-type="arrow"
-                                data-needle-width="2"
-                                data-needle-circle-size="7"
-                                data-needle-circle-outer="true"
-                                data-needle-circle-inner="false"
-                                data-animation-duration="100"
-                                data-animation-rule="linear"
-                                data-bar-width="10"
-                                data-value="0"
-                        ></canvas>
-                        <div class="toil-value"><span>0</span> °C</div>
+                </div>
+                <div class="col s6">
+                    <div class="row">
+                        <div class="col s12 m6 gear">
+                            <div class="card-panel">
+                                <div><span class="title">Marcia:</span><br><span id="gear-value" class="value">0</span></div>
+                            </div>
+                        </div>
+                        <div class="col s12 m6 vbatt">
+                            <div class="card-panel">
+                                <div><span class="title">Tensione batteria:</span><br><span id="vbatt-value" class="value">0</span> V</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card-panel">
+                            <div id="rpm"></div>
+                        </div>
                     </div>
                 </div>
 
+            </div>
+            <div class="row">
+                <div class="card-panel infobox">
+                    <i class="far fa-check-circle"></i>
+                    <span>I valori rientrano nella norma. Nessun problema rilevato.</span>
+                </div>
             </div>
         </div>
-
-        <div class="col s12 m3">
-            <div class="row">
-                <div class="col s12 m6 gear">
-                    <div class="card-panel">
-                        <div><span class="title">Marcia:</span><br><span id="gear-value" class="value">0</span></div>
-                    </div>
-                </div>
-                <div class="col s12 m6 vbatt">
-                    <div class="card-panel">
-                        <div><span class="title">Tensione batteria:</span><br><span id="vbatt-value" class="value">0</span> V</div>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="card-panel">
-                    <div id="rpm"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col s12 m5">
+        <div class="col s5">
             <div class="card-panel">
                 <gmap>Map is loading....</gmap>
                 <div class="row">
@@ -121,8 +128,8 @@
                 </div>
             </div>
         </div>
-
     </div>
+
 </div>
 
 <script>require('materialize-css')</script>
