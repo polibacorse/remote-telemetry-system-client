@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.min.css">
     <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
     <link rel="stylesheet" href="main.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
 </head>
 <body>
 
@@ -18,7 +19,7 @@
     </mqttStatus>
 
     <div class="row">
-        <div class="col s7">
+        <div id="stats-section" class="col s7">
             <div class="row">
 
                 <div class="col s6">
@@ -89,14 +90,19 @@
                 </div>
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s12 m6 gear">
+                        <div class="col s12 m4 gear">
                             <div class="card-panel">
                                 <div><span class="title">Marcia:</span><br><span id="gear-value" class="value">0</span></div>
                             </div>
                         </div>
-                        <div class="col s12 m6 vbatt">
+                        <div class="col s12 m4 vbatt">
                             <div class="card-panel">
-                                <div><span class="title">Tensione batteria:</span><br><span id="vbatt-value" class="value">0</span> V</div>
+                                <div><span class="title">Batteria:</span><br><span id="vbatt-value" class="value">0</span> V</div>
+                            </div>
+                        </div>
+                        <div class="col s12 m4 speed">
+                            <div class="card-panel">
+                                <div><span class="title">Velocità:</span><br><span id="speed-value" class="value">0</span> Km/h</div>
                             </div>
                         </div>
                     </div>
@@ -115,9 +121,15 @@
                 </div>
             </div>
         </div>
-        <div class="col s5">
+        <div id="map-section" class="col s5">
             <div class="card-panel">
-                <gmap>Map is loading....</gmap>
+                <div class="nav-track">
+                    <button onclick="goToMarker()"><i class="fas fa-map-marker-alt"></i></button>
+                    <button onclick="goToTrack(tracks.binetto)">Binetto</button>
+                    <button onclick="goToTrack(tracks.varano)">Varano</button>
+                    <button onclick="goToTrack(tracks.hockenhein)">Hockenhein</button>
+                </div>
+                <div id="map"></div>
                 <div class="row">
                     <div class="col s6">
                         <div>Latitudine: <span id="lat-value">0</span></div>
@@ -135,7 +147,6 @@
 <script>require('materialize-css')</script>
 <script>var $ = jQuery = require("jquery");</script>
 <script src="scripts/main.js"></script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALS4fzs1Ni42DyzYVNQCWVys0vXFDkXlA&callback=initMap"></script>
 
 <footer>
     <small class="time">Ultimo aggiornamento: <span>-</span></small>
