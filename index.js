@@ -32,7 +32,9 @@ function showDashboardWindow (credentials) {
         dashboardWin = null
     });
 
-    dashboardWin.webContents.once('dom-ready', () => dashboardWin.webContents.send('login', credentials));
+    ipc.on('ready', (event, message) => {
+        dashboardWin.webContents.send('login', credentials)
+    });
 }
 
 app.on('browser-window-created',function(e, window) {

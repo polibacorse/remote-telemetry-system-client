@@ -213,3 +213,7 @@ mqttStatus {
 .nav-track button:not(:first-of-type) {
     margin-left: -4px;
 }
+
+.mapboxgl-ctrl-logo, .mapboxgl-ctrl-bottom-right {
+    display: none !important;
+}

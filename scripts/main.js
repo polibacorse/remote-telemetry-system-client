@@ -69,6 +69,8 @@ $(document).ready(function() {
 
     initMap();
 
+    ipc.send('ready');
+
 });
 
 $(window).on('resize', onResize);
@@ -79,7 +81,7 @@ function initMqtt(loginCredentials, requiredTopics) {
 
     // Try to connect with mqtt
     const client  = mqtt.connect('mqtt://' + loginCredentials.server, {
-        clientId: 'telemetry',
+        clientId: 'telemetry' + Math.floor(Math.random() * 1000),
         username: loginCredentials.username,
         password: loginCredentials.password
     });
@@ -308,8 +310,8 @@ function updatePOSITION(value) {
     lat = JSON.parse(value).latitude;
     lng = JSON.parse(value).longitude;
 
-    $('#lat-value').text(round(lat, 2));
-    $('#lng-value').text(round(lng, 2));
+    $('#lat-value').text(round(lat, 4));
+    $('#lng-value').text(round(lng, 4));
 
     changeCarPosition(lat, lng);
 
@@ -391,4 +393,4 @@ function changeMQTTStatus(status) {
 
 /* UTILS */
 
-round = (value, n) => Math.round(value * 10 * n) / (10 * n);
+round = (value, n = 2) => Math.round(value * 10 * n) / (10 * n);
