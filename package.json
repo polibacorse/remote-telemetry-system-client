@@ -5,6 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
+    "build-linux": "electron-packager . remote-telemetry-system --overwrite --platform=linux --arch=x64 --icon=img/icon.ico --out=build",
+    "build-win": "electron-packager . remote-telemetry-system --overwrite --platform=win32 --arch=ia32 --icon=img/icon.ico --out=build --version-string.CompanyName=\"PolibaCorse\" --version-string.FileDescription=\"Remote Telemtry System by PolibaCorse\" --version-string.ProductName=\"Remote Telemtry System - PolibaCorse\"",
+    "build-mac": "electron-packager . remote-telemetry-system --overwrite --platform=darwin --arch=x64 --icon=img/icon.icns --out=build",
+    "build": "npm run build-linux && npm run build-win && npm run build-mac",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Potito Aghilar",
