@@ -19,7 +19,7 @@ const requiredTopics = {
 
 /* PRIVATE VARIABLES */
 
-let map, lat = 41.822, lng = 12.573, tracked = false;
+let map, lat = 41.822, lng = 12.573, tracked = false, markerHTML = undefined;
 const mqttConnection = {
     CONNECTING: {
         className: 'mqtt-connecting',
@@ -52,7 +52,7 @@ const tracks = {
     },
     hockenhein: {
         center: {lat: 49.330, lng: 8.574},
-        zoom: 14.90
+        zoom: 14
     },
 };
 
@@ -308,8 +308,8 @@ function updatePOSITION(value) {
     lat = JSON.parse(value).latitude;
     lng = JSON.parse(value).longitude;
 
-    $('#lat-value').text(lag);
-    $('#lng-value').text(lng);
+    $('#lat-value').text(round(lat, 2));
+    $('#lng-value').text(round(lng, 2));
 
     changeCarPosition(lat, lng);
 
@@ -327,7 +327,7 @@ function changeCarPosition() {
                 type: 'Feature',
                 geometry: {
                     type: 'Point',
-                    coordinates: [15.545014, 41.459819]
+                    coordinates: [lng, lat]
                 },
                 properties: {
                     title: 'PC5-18 EVO',
@@ -341,21 +341,27 @@ function changeCarPosition() {
     geojson.features.forEach(function(marker) {
 
         // Create a HTML element
-        var el = document.createElement('div');
-        el.className = 'marker';
+        if(markerHTML === undefined) {
+            const htmlMarker = document.createElement('div');
+            htmlMarker.className = 'marker';
 
-        // Make a marker and add to the map
-        new mapboxgl.Marker(el)
-            .setLngLat(marker.geometry.coordinates)
-            .setPopup(new mapboxgl.Popup({ offset: 25 }) // Add popups
-            .setHTML('<div class="map-popup"><h6>' + marker.properties.title + '</h6><span>' + marker.properties.description + '</span></div>'))
-            .addTo(map);
+            // Make a marker and add to the map
+            markerHTML = new mapboxgl.Marker(htmlMarker)
+                .setLngLat(marker.geometry.coordinates)
+                .setPopup(new mapboxgl.Popup({ offset: 25 }) // Add popups
+                    .setHTML('<div class="map-popup"><h6>' + marker.properties.title + '</h6><span>' + marker.properties.description + '</span></div>'))
+                .addTo(map);
+        } else {
+
+            markerHTML.setLngLat(new mapboxgl.LngLat(lng, lat));
+
+        }
     });
 
 }
 
 function updateSPEED(value) {
-    $('#speed-value').text(JSON.parse(value).value);
+    $('#speed-value').text(Math.round(JSON.parse(value).speed));
 }
 
 function goToTrack(track) {
@@ -385,4 +391,4 @@ function changeMQTTStatus(status) {
 
 /* UTILS */
 
-round = (value) => Math.round(value * 100) / 100;
+round = (value, n) => Math.round(value * 10 * n) / (10 * n);

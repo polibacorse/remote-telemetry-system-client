@@ -175,7 +175,7 @@ mqttStatus {
     width: 25px;
     height: 37px;
     cursor: pointer;
-    top: -25px !important;
+    top: -12px !important;
 }
 
 .mapboxgl-popup {
