@@ -1,12 +1,13 @@
-var mqtt = require('mqtt');
+const mqtt = require('mqtt');
 var LinearGauge = require('canvas-gauges');
-var Highcharts = require('highcharts');
+const Highcharts = require('highcharts');
 require('highcharts/highcharts-more')(Highcharts);
-var mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+const mapboxgl = require('mapbox-gl/dist/mapbox-gl.js');
+const ipc = require('electron').ipcRenderer;
 
 /* EDITABLE VARIABLES */
-var topicBasePath = 'data/formatted/';
-var requiredTopics = {
+const topicBasePath = 'data/formatted/';
+const requiredTopics = {
     RPM: 'rpm',
     TH2O: 'th20',
     TOIL: 'toil',
@@ -37,7 +38,7 @@ const mqttConnection = {
         label: 'limitata',
     },
 };
-var _rpmChart = undefined;
+let _rpmChart = undefined;
 
 // Tracks coordinates
 const tracks = {
@@ -57,7 +58,9 @@ const tracks = {
 
 $(document).ready(function() {
 
-    initMqtt(requiredTopics);
+    ipc.on('login', (event, message) => {
+        initMqtt(message, requiredTopics);
+    });
 
     initializeGUI();
 
@@ -70,20 +73,15 @@ $(document).ready(function() {
 
 $(window).on('resize', onResize);
 
-function initMqtt(requiredTopics) {
+function initMqtt(loginCredentials, requiredTopics) {
 
     changeMQTTStatus(mqttConnection.CONNECTING);
 
     // Try to connect with mqtt
-    /*var client  = mqtt.connect('mqtt://try:try@broker.shiftr.io', {
+    const client  = mqtt.connect('mqtt://' + loginCredentials.server, {
         clientId: 'telemetry',
-        protocol: 'wss',
-    });*/
-    /*var client  = mqtt.connect('mqtt://localhost', {
-        clientId: 'telemetry',
-    });*/
-    var client  = mqtt.connect('mqtt://tamburodebiano.ddns.net', {
-        clientId: 'telemetry',
+        username: loginCredentials.username,
+        password: loginCredentials.password
     });
 
     // On connected

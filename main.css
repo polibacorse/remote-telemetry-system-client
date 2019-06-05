@@ -19,6 +19,12 @@ footer {
     float: right;
 }
 
+.login-credits {
+    text-align: center;
+    color: gray;
+    margin-bottom: 5px;
+}
+
 title {
     text-align: center;
     display: block;
@@ -128,6 +134,24 @@ mqttStatus {
     position: relative;
     top: -3px;
     margin-left: 10px;
+}
+
+/*
+    Login
+*/
+
+.login-body {
+    background-color: white;
+}
+
+.login-body .center {
+    text-align: center;
+}
+
+.login-body .btn {
+    margin: 5px auto auto;
+    display: block;
+    width: fit-content;
 }
 
 /*

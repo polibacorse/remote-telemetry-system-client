@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <title>Login RTS</title>
+    <link rel="stylesheet" href="./node_modules/materialize-css/dist/css/materialize.min.css">
+    <link rel="stylesheet" href="./node_modules/@fortawesome/fontawesome-free/css/all.css">
+    <link rel="stylesheet" href="main.css">
+    <link href='https://api.mapbox.com/mapbox-gl-js/v0.54.0/mapbox-gl.css' rel='stylesheet' />
+</head>
+<body class="login-body">
+
+<div class="container-fluid">
+
+    <div class="center">
+        <img src="img/logo.jpeg" alt="logo" width="180">
+        <p>Inserisci la configurazione del server MQTT</p>
+    </div>
+    <label>
+        Server (Obbligatorio)
+        <input id="server" type="text" value="tamburodebiano.ddns.net">
+    </label>
+    <label>
+        Username
+        <input id="username" type="text" placeholder="(vuoto)">
+    </label>
+    <label>
+        Password
+        <input id="password" type="text" placeholder="(vuoto)">
+    </label>
+    <a id="login" class="waves-effect waves-light btn">Accedi</a>
+
+</div>
+
+<script>require('materialize-css')</script>
+<script>var $ = jQuery = require("jquery");</script>
+<script src="scripts/login.js"></script>
+
+<footer class="login-credits">
+    <small>RTS by PolibaCorse</small>
+</footer>
+</body>
+</html>

@@ -1,22 +1,45 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
+const ipc = require('electron').ipcMain;
 
-let win;
+let loginWin, dashboardWin;
 
-function createWindow () {
+function showLoginWindow() {
 
-    win = new BrowserWindow({ width: 800, height: 600 });
-    win.maximize();
+    loginWin = new BrowserWindow({ width: 322, height: 560 });
+    loginWin.setResizable(false);
 
-    win.loadFile('index.html');
+    loginWin.loadFile('login.html');
 
-    win.on('closed', () => {
-        win = null
+    loginWin.on('closed', () => {
+        loginWin = null
     });
 
-    //win.webContents.toggleDevTools();
+    ipc.on('login', (event, credentials) => {
+        showDashboardWindow(credentials);
+        loginWin.close();
+    });
+
 }
 
-app.on('ready', createWindow);
+function showDashboardWindow (credentials) {
+
+    dashboardWin = new BrowserWindow({ width: 800, height: 600 });
+    dashboardWin.maximize();
+
+    dashboardWin.loadFile('index.html');
+
+    dashboardWin.on('closed', () => {
+        dashboardWin = null
+    });
+
+    dashboardWin.webContents.once('dom-ready', () => dashboardWin.webContents.send('login', credentials));
+}
+
+app.on('browser-window-created',function(e, window) {
+    window.setMenuBarVisibility(false);
+});
+
+app.on('ready', showLoginWindow);
 
 app.on('window-all-closed', () => {
     if (process.platform !== 'darwin') {
@@ -25,7 +48,7 @@ app.on('window-all-closed', () => {
 });
 
 app.on('activate', () => {
-    if (win === null) {
-        createWindow()
+    if (showLoginWindow === null || dashboardWin === null) {
+        showLoginWindow()
     }
 });
