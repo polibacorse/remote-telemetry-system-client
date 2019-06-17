@@ -30,7 +30,7 @@
                                 <canvas id="th2o-chart"
                                         data-type="linear-gauge"
                                         data-width="120"
-                                        data-height="400"
+                                        data-height="300"
                                         data-min-value="0"
                                         data-start-angle="90"
                                         data-ticks-angle="180"
@@ -60,7 +60,7 @@
                                 <canvas id="toil-chart"
                                         data-type="linear-gauge"
                                         data-width="120"
-                                        data-height="400"
+                                        data-height="300"
                                         data-min-value="0"
                                         data-start-angle="90"
                                         data-ticks-angle="180"
@@ -87,20 +87,48 @@
                             </div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s6 mini-left">
+                                <div class="card-panel">
+                                    <div><span class="title">P. Carburante:</span><br><span id="pressure-fuel" class="value">0</span> mBar</div>
+                                </div>
+                            </div>
+                            <div class="col s6 mini-right">
+                                <div class="card-panel">
+                                    <div><span class="title">P. Olio:</span><br><span id="pressure-oil" class="value">0</span> mBar</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="col s6 mini-left">
+                                <div class="card-panel">
+                                    <div><span class="title">P. Freno Ant.:</span><br><span id="pressure-brake-front" class="value">0</span> mBar</div>
+                                </div>
+                            </div>
+                            <div class="col s6 mini-right">
+                                <div class="card-panel">
+                                    <div><span class="title">P. Freno Post.:</span><br><span id="pressure-brake-rear" class="value">0</span> mBar</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="col s6">
                     <div class="row">
-                        <div class="col s12 m4 gear">
+                        <div class="col s12 m4 mini-left">
                             <div class="card-panel">
                                 <div><span class="title">Marcia:</span><br><span id="gear-value" class="value">0</span></div>
                             </div>
                         </div>
-                        <div class="col s12 m4 vbatt">
+                        <div class="col s12 m4 mini-center">
                             <div class="card-panel">
                                 <div><span class="title">Batteria:</span><br><span id="vbatt-value" class="value">0</span> V</div>
                             </div>
                         </div>
-                        <div class="col s12 m4 speed">
+                        <div class="col s12 m4 mini-right">
                             <div class="card-panel">
                                 <div><span class="title">Velocità:</span><br><span id="speed-value" class="value">0</span> Km/h</div>
                             </div>
@@ -111,14 +139,25 @@
                             <div id="rpm"></div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col s4 mini-left">
+                            <div class="card-panel">
+                                <div><span class="title">Lambda:</span><br><span id="lambda" class="value">0</span></div>
+                            </div>
+                        </div>
+                        <div class="col s4 mini-center">
+                            <div class="card-panel">
+                                <div><span class="title">TPS:</span><br><span id="tps" class="value">0</span> %</div>
+                            </div>
+                        </div>
+                        <div class="col s4 mini-right">
+                            <div class="card-panel">
+                                <div><span class="title">MAP:</span><br><span id="map_sensor" class="value">0</span> mBar</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-            </div>
-            <div class="row">
-                <div class="card-panel infobox">
-                    <i class="far fa-check-circle"></i>
-                    <span>I valori rientrano nella norma. Nessun problema rilevato.</span>
-                </div>
             </div>
         </div>
         <div id="map-section" class="col s5">
@@ -149,7 +188,7 @@
 <script src="scripts/main.js"></script>
 
 <footer>
-    <small class="time">Latenza: <span>-</span> ms</small>
+    <small class="time">Ultimo arrivo: <span id="last-time">-</span> (latenza <span id="latency">-</span> sec)</small>
     <small class="credits">RTS - Realizzato da Potito Aghilar e Nunzio Barone</small>
 </footer>
 </body>

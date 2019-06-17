@@ -14,12 +14,24 @@ const requiredTopics = {
     GEAR: 'gear',
     VBATT: 'vbattdir',
     POSITION: 'position',
-    SPEED: 'speed',
+    SPEED: 'mini-right',
+    PFUEL: 'pfuel',
+    POIL: 'poil',
+    PBRAKE_FRONT: 'pbrake_front',
+    PBRAKE_REAR: 'pbrake_rear',
+    LAMBDA: 'lambda',
+    TPS: 'tps',
+    MAP: 'map',
 };
 
 /* PRIVATE VARIABLES */
 
-let map, lat = 41.822, lng = 12.573, tracked = false, markerHTML = undefined;
+const italyPosition = {
+    lat: 41.822,
+    lng: 12.573,
+    zoom: 4.4,
+};
+let map, lat = 0, lng = 0, gps_tracked = false, map_tracking_ticker = false, markerHTML = undefined;
 const mqttConnection = {
     CONNECTING: {
         className: 'mqtt-connecting',
@@ -122,6 +134,27 @@ function initMqtt(loginCredentials, requiredTopics) {
             case topicBasePath + requiredTopics.SPEED:
                 updateSPEED(message);
                 break;
+            case topicBasePath + requiredTopics.PFUEL:
+                updatePFUEL(message);
+                break;
+            case topicBasePath + requiredTopics.POIL:
+                updatePOIL(message);
+                break;
+            case topicBasePath + requiredTopics.PBRAKE_FRONT:
+                updatePBRAKE_FRONT(message);
+                break;
+            case topicBasePath + requiredTopics.PBRAKE_REAR:
+                updatePBRAKE_REAR(message);
+                break;
+            case topicBasePath + requiredTopics.LAMBDA:
+                updateLAMBDA(message);
+                break;
+            case topicBasePath + requiredTopics.TPS:
+                updateTPS(message);
+                break;
+            case topicBasePath + requiredTopics.MAP:
+                updateMAP(message);
+                break;
         }
     });
 
@@ -143,13 +176,10 @@ function initMap() {
     map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/potito/cjwi6b3mt0jax1cmvczaz81im',
-        center: {lat: 41.822, lng: 12.573},
-        zoom: 4.4,
+        center: {lat: italyPosition.lat, lng: italyPosition.lng},
+        zoom: italyPosition.zoom,
         interactive: false
     });
-
-    // TODO remove this line
-    //changeCarPosition();
 
 }
 
@@ -274,8 +304,10 @@ function renderRPM() {
 }
 
 function updateTime(value) {
-    var date = new Date(value * 1000);
-    $('.time > span').text(date);
+    const carTime = new Date(JSON.parse(value).time * 1000);
+    const actualTime = new Date();
+    $('.time #last-time').text(carTime.toGMTString());
+    $('.time #latency').text(actualTime - carTime);
 }
 
 function updateRPM(value) {
@@ -310,8 +342,8 @@ function updatePOSITION(value) {
     lat = JSON.parse(value).latitude;
     lng = JSON.parse(value).longitude;
 
-    $('#lat-value').text(round(lat, 4));
-    $('#lng-value').text(round(lng, 4));
+    $('#lat-value').text(round(lat, 10));
+    $('#lng-value').text(round(lng, 10));
 
     changeCarPosition(lat, lng);
 
@@ -319,7 +351,13 @@ function updatePOSITION(value) {
 
 function changeCarPosition() {
 
-    tracked = true;
+    // Continue only if GPS signal is received
+    if(track.center.lat == 0 && track.center.lng == 0) {
+        gps_tracked = false;
+        return;
+    } else {
+        gps_tracked = true;
+    }
 
     // Create geojson point
     const geojson = {
@@ -366,7 +404,38 @@ function updateSPEED(value) {
     $('#speed-value').text(Math.round(JSON.parse(value).speed));
 }
 
+function updatePFUEL(value) {
+    $('#pressure-fuel').text(Math.round(JSON.parse(value).value));
+}
+
+function updatePOIL(value) {
+    $('#pressure-oil').text(Math.round(JSON.parse(value).value));
+}
+
+function updatePBRAKE_FRONT(value) {
+    $('#pressure-brake-front').text(Math.round(JSON.parse(value).value));
+}
+
+function updatePBRAKE_REAR(value) {
+    $('#pressure-brake-rear').text(Math.round(JSON.parse(value).value));
+}
+
+function updateLAMBDA(value) {
+    $('#lambda').text(Math.round(JSON.parse(value).value));
+}
+
+function updateTPS(value) {
+    $('#tps').text(Math.round(JSON.parse(value).value));
+}
+
+function updateMAP(value) {
+    $('#map_sensor').text(Math.round(JSON.parse(value).value));
+}
+
 function goToTrack(track) {
+
+    clearInterval(map_tracking_ticker);
+
     map.flyTo({
         center: [
             track.center.lng,
@@ -377,13 +446,16 @@ function goToTrack(track) {
 }
 
 function goToMarker() {
-    map.flyTo({
+
+    map_tracking_ticker = setInterval(() => map.flyTo({
+
         center: [
-            lng,
-            lat,
+            gps_tracked ? lng : italyPosition.lng,
+            gps_tracked ? lat : italyPosition.lat,
         ],
-        zoom: tracked ? 16 : 4.4
-    });
+        zoom: gps_tracked ? 16 : italyPosition.zoom
+
+    }), 1000);
 }
 
 function changeMQTTStatus(status) {

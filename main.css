@@ -67,23 +67,23 @@ mqttStatus {
 }
 
 .row {
-    margin-bottom: -8px;
+    margin-bottom: 0;
 }
 
 #rpm {
     height: 352px;
 }
 
-.gear {
+.mini-left {
     padding-left: 0 !important;
     padding-right: 0.375rem !important;
 }
 
-.vbatt {
+.mini-center {
 
 }
 
-.speed {
+.mini-right {
     padding-left: 0.375rem !important;
     padding-right: 0 !important;
 }
@@ -101,7 +101,7 @@ mqttStatus {
     text-align: center;
 }
 
-.gear .card-panel, .vbatt .card-panel, .speed .card-panel {
+.mini-left .card-panel, .mini-center .card-panel, .mini-right .card-panel {
     padding: 9px 24px;
 }
 
