@@ -14,7 +14,7 @@ const requiredTopics = {
     GEAR: 'gear',
     VBATT: 'vbattdir',
     POSITION: 'position',
-    SPEED: 'mini-right',
+    SPEED: 'speed',
     PFUEL: 'pfuel',
     POIL: 'poil',
     PBRAKE_FRONT: 'pbrake_front',
