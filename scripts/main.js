@@ -349,10 +349,10 @@ function updatePOSITION(value) {
 
 }
 
-function changeCarPosition() {
+function changeCarPosition(lat, lng) {
 
     // Continue only if GPS signal is received
-    if(track.center.lat == 0 && track.center.lng == 0) {
+    if(lat === 0 && lng === 0) {
         gps_tracked = false;
         return;
     } else {
