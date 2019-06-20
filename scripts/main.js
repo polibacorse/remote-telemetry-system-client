@@ -435,6 +435,7 @@ function updateMAP(value) {
 function goToTrack(track) {
 
     clearInterval(map_tracking_ticker);
+    map_tracking_ticker = undefined;
 
     map.flyTo({
         center: [
@@ -446,6 +447,10 @@ function goToTrack(track) {
 }
 
 function goToMarker() {
+
+    if(map_tracking_ticker) {
+        clearInterval(map_tracking_ticker);
+    }
 
     map_tracking_ticker = setInterval(() => map.flyTo({
 
