@@ -306,8 +306,8 @@ function renderRPM() {
 function updateTime(value) {
     const carTime = new Date(JSON.parse(value).time * 1000);
     const actualTime = new Date();
-    $('.time #last-time').text(carTime.toGMTString());
-    $('.time #latency').text(actualTime - carTime);
+    $('.time #last-time').text(carTime.toLocaleString());
+    $('.time #latency').text((actualTime - carTime) / 1000);
 }
 
 function updateRPM(value) {
@@ -342,8 +342,8 @@ function updatePOSITION(value) {
     lat = JSON.parse(value).latitude;
     lng = JSON.parse(value).longitude;
 
-    $('#lat-value').text(round(lat, 10));
-    $('#lng-value').text(round(lng, 10));
+    $('#lat-value').text(round(lat, 10).toFixed(10));
+    $('#lng-value').text(round(lng, 10).toFixed(10));
 
     changeCarPosition(lat, lng);
 
@@ -470,4 +470,4 @@ function changeMQTTStatus(status) {
 
 /* UTILS */
 
-round = (value, n = 2) => Math.round(value * 10 * n) / (10 * n);
+round = (value, n = 2) => Math.round(value * Math.pow(10, n)) / Math.pow(10, n);
