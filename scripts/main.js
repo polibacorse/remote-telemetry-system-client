@@ -315,7 +315,7 @@ function updateRPM(value) {
 }
 
 function updateTH2O(value) {
-    var newValue = JSON.parse(value).value;
+    const newValue = JSON.parse(value).value;
 
     if(newValue != $('#th2o-chart').attr('data-value')) {
         $('#th2o-chart').attr('data-value', newValue);
@@ -324,8 +324,11 @@ function updateTH2O(value) {
 }
 
 function updateTOIL(value) {
-    if(JSON.parse(value).value != $('#toil-chart').attr('data-value')) {
+    const newValue = JSON.parse(value).value;
+
+    if(newValue != $('#toil-chart').attr('data-value')) {
         $('#toil-chart').attr('data-value', JSON.parse(value).value);
+        $('.toil-value > span').text(newValue);
     }
 }
 
