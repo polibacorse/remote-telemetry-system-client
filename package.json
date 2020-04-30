@@ -21,7 +21,7 @@
     "canvas-gauges": "^2.1.5-linear",
     "highcharts": "^7.0.3",
     "highcharts-more": "^0.1.7",
-    "jquery": "^3.3.1",
+    "jquery": "^3.5.0",
     "mapbox-gl": "^1.0.0",
     "materialize-css": "^1.0.0",
     "mqtt": "^2.18.8",
