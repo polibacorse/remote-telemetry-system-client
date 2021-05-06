@@ -19,7 +19,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.8.1",
     "canvas-gauges": "^2.1.5-linear",
-    "highcharts": "^7.0.3",
+    "highcharts": "^9.0.0",
     "highcharts-more": "^0.1.7",
     "jquery": "^3.3.1",
     "mapbox-gl": "^1.0.0",
